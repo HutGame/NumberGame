@@ -28,8 +28,11 @@ public final class R {
     }
     public static final class id {
         public static final int Button10=0x7f080009;
-        public static final int action_settings=0x7f080010;
+        public static final int action_settings=0x7f080013;
         public static final int button1=0x7f080007;
+        public static final int button11=0x7f080011;
+        public static final int button12=0x7f080010;
+        public static final int button13=0x7f080012;
         public static final int button2=0x7f080005;
         public static final int button3=0x7f080002;
         public static final int button4=0x7f08000b;
@@ -48,6 +51,7 @@ public final class R {
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int fragment_main=0x7f030001;
+        public static final int start=0x7f030002;
     }
     public static final class menu {
         public static final int main=0x7f070000;

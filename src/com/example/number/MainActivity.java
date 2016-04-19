@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Build;
 
-public class MainActivity extends Activity{
+public class MainActivity extends start{
 	/* 毫秒倒计时内部类*/
 	public class myCountDownTimer extends CountDownTimer{
 	    
@@ -42,6 +42,7 @@ public class MainActivity extends Activity{
 			showDialog(); 
 		}
 	}
+	
 	private long useTime=0;
     private int gameTime=10;
     private int countTime=0;
@@ -51,6 +52,7 @@ public class MainActivity extends Activity{
     private TextView record=null;
     private TextView bestRecord=null;
     private double min=0.0;
+    private int onlyUseFirst=0;  //只调用一次开始游戏
     private int state=0;     //解决bug
     private Button button1,button2,button3,button4,button5,button6,
     button7,button8,button9;
@@ -76,8 +78,25 @@ public class MainActivity extends Activity{
 				startButton.setVisibility(View.INVISIBLE);
 				state=0;
 				Toast.makeText(MainActivity.this,"计时开始", 1).show();
+				if(getDifficulty()==1)
+				{
 				mc = new myCountDownTimer(gameTime*1000,1);   //总共10s  1毫秒执行一次onTick
 				mc.start();
+				}
+				else if(getDifficulty()==2)   //只调用一次开始游戏
+				{
+					  if(onlyUseFirst==0)
+					  {
+						  mc = new myCountDownTimer(gameTime*1000,1);   //总共10s  1毫秒执行一次onTick
+						  mc.start();
+						  onlyUseFirst=1;
+					  }
+				}
+				else if(getDifficulty()==3)
+				{
+					mc = new myCountDownTimer(gameTime*1000,1);   //总共10s  1毫秒执行一次onTick
+					mc.start();
+				}
                 // 设置开始讲时时间   
                 /*chronometer.setBase(SystemClock.elapsedRealtime());   
                 // 开始记时   
@@ -119,44 +138,64 @@ public class MainActivity extends Activity{
 					@Override
 					public void onClick(View v) {
 						button1.setVisibility(View.INVISIBLE);
+						if(getDifficulty()==3)
+							randomPosButton();
 							button2.setOnClickListener(new OnClickListener() {
 								@Override
 								public void onClick(View v) {
 									button2.setVisibility(View.INVISIBLE);
+									if(getDifficulty()==3)
+										randomPosButton();
 										button3.setOnClickListener(new OnClickListener() {
 											@Override
 											public void onClick(View v) {
 												button3.setVisibility(View.INVISIBLE);
+												if(getDifficulty()==3)
+													randomPosButton();
 													button4.setOnClickListener(new OnClickListener() {
 														@Override
 														public void onClick(View v) {
 															button4.setVisibility(View.INVISIBLE);
+															if(getDifficulty()==3)
+																randomPosButton();
 																button5.setOnClickListener(new OnClickListener() {
 																	@Override
 																	public void onClick(View v) {
 																		button5.setVisibility(View.INVISIBLE);
+																		if(getDifficulty()==3)
+																			randomPosButton();
 																			button6.setOnClickListener(new OnClickListener() {
 																				@Override
 																				public void onClick(View v) {
 																					button6.setVisibility(View.INVISIBLE);
+																					if(getDifficulty()==3)
+																						randomPosButton();
 																						button7.setOnClickListener(new OnClickListener() {
 																							@Override
 																							public void onClick(View v) {
 																								button7.setVisibility(View.INVISIBLE);
+																								if(getDifficulty()==3)
+																									randomPosButton();
 																									button8.setOnClickListener(new OnClickListener() {
 																										@Override
 																										public void onClick(View v) {
 																											button8.setVisibility(View.INVISIBLE);
+																											if(getDifficulty()==3)
+																												randomPosButton();
 																												button9.setOnClickListener(new OnClickListener() {
 																													@Override
 																													public void onClick(View v) {
 																														button9.setVisibility(View.INVISIBLE);
 																														if(state!=1)
 																														{
-                                                                                                                        showSuccessDialog();  
+                                                                                                                   
                                                                                                                         mc.cancel();
+                                                                                                                        if(useTime<gameTime*1000)
+                                                                                                                        {
+                                                                                                                        showSuccessDialog(); 
                                                                                                                         showTimeInSecond.setText(" 游戏成功");
                                                                                                                         record.setText("本次记录:"+(gameTime*1000-useTime)/1000.0+"秒");
+                                                                                                                        }
                                                                                                                         showBestRecord();
 																														}
 																													}
@@ -204,10 +243,23 @@ public class MainActivity extends Activity{
 				            	 randomPosButton();
 				                 //chronometer.setText("00:00");
 				                 textView.setText("限时"+gameTime+"秒");
-				 				 startButton.setVisibility(View.VISIBLE);
 				 				 showTimeInSecond.setText("倒计时工具");
 				                 cancleListen();
 				            	 showButton();
+				            	 if(getDifficulty()==1)
+				            	 {
+				            		 startButton.setVisibility(View.VISIBLE);
+				            	 }
+				            	 else if(getDifficulty()==2)
+				            	 {
+				            		listenButton();
+				            		mc = new myCountDownTimer(gameTime*1000,1);   //总共10s  1毫秒执行一次onTick
+				     				mc.start();                                    //直接开始计时
+				            	 }
+				            	 else if(getDifficulty()==3)
+				            	 {
+				            		 startButton.setVisibility(View.VISIBLE);
+				            	 }
 				             }
 				         });   
 			     builder.setCancelable(false);
@@ -240,9 +292,22 @@ public class MainActivity extends Activity{
 			            	 randomPosButton();
 			            	 showButton();
 			            	 //chronometer.setText("00:00");
-			            	 startButton.setVisibility(View.VISIBLE);
 			            	 cancleListen();  
 			 				 showTimeInSecond.setText("倒计时工具");
+			 				if(getDifficulty()==1)
+			            	 {
+			            		 startButton.setVisibility(View.VISIBLE);
+			            	 }
+			            	 else if(getDifficulty()==2)
+			            	 {
+			            		listenButton();
+			            		mc = new myCountDownTimer(gameTime*1000,1);   //总共10s  1毫秒执行一次onTick
+			     				mc.start();                                    //直接开始计时
+			            	 }
+			            	 else if(getDifficulty()==3)
+			            	 {
+			            		 startButton.setVisibility(View.VISIBLE);
+			            	 }
 			             }   
 			         });   
 		     builder.setCancelable(false);
