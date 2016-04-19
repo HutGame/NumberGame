@@ -62,6 +62,7 @@ public class MainActivity extends start{
 	private TextView textView=null;
 	private TextView record=null;
 	private TextView bestRecord=null;
+
 	private double min=10.0;
 	private int onlyUseFirst=0;  //只调用一次开始游戏
 	private int state=0;     //解决bug
@@ -83,8 +84,10 @@ public class MainActivity extends start{
 		textView = (TextView) findViewById(R.id.textView1);
 		chronometer = (Chronometer) findViewById(R.id.chronometer);
 
-		min=read();   //程序打开时读取文本里面最佳成绩，并赋值给min;
+
+		min=read(getDifficulty());   //程序打开时读取文本里面最佳成绩，并赋值给min;
 		bestRecord.setText("最佳记录:"+min+"秒");
+
 		startButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) { 
 				initButton();
@@ -299,7 +302,7 @@ public class MainActivity extends start{
 			if((gameTime*1000-useTime)/1000.0<min)
 				min=(gameTime*1000-useTime)/1000.0;
 			bestRecord.setText("最佳记录:"+min+"秒");
-			save(min);      //保存最佳纪录文件
+			save(min,getDifficulty());      //保存最佳纪录文件
 
 	    //}
 
@@ -400,8 +403,18 @@ public class MainActivity extends start{
 	 * 保存功能
 	 * Ninse  2016.4.19
 	 * */
-	private void save(double number) {
-
+	private void save(double number,int diffcult) {
+		switch(diffcult){
+		case 1: 
+			fileName = "bestRecord1.txt";
+			break;
+		case 2: 
+			fileName = "bestRecord2.txt";
+			break;
+		case 3: 
+			fileName = "bestRecord3.txt";
+			break;
+		}
 		String content =  String.valueOf(number);
 
 		try {
@@ -435,7 +448,18 @@ public class MainActivity extends start{
 	 * 读取功能
 	 * Ninse  2016.4.19
 	 * */
-	private double read() {     
+	private double read(int diffcult) {     
+		switch(diffcult){
+		case 1: 
+			fileName = "bestRecord1.txt";
+			break;
+		case 2: 
+			fileName = "bestRecord2.txt";
+			break;
+		case 3: 
+			fileName = "bestRecord3.txt";
+			break;
+		}
 		try {
 			FileInputStream inputStream = this.openFileInput(fileName);
 			byte[] bytes = new byte[1024];

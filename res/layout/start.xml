@@ -5,32 +5,65 @@
     android:orientation="vertical" >
 
     <Button
+        android:id="@+id/button11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="91dp"
+        android:layout_marginRight="32dp"
+        android:text="入门" />
+
+    <Button
         android:id="@+id/button12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button11"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="简单升级版" />
+        android:layout_above="@+id/button11"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="32dp"
+        android:text="简单" />
 
     <Button
         android:id="@+id/button13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button12"
-        android:layout_alignRight="@+id/button12"
-        android:layout_below="@+id/button12"
-        android:layout_marginTop="15dp"
+        android:layout_above="@+id/button12"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="32dp"
         android:text="中等" />
 
-    <Button
-        android:id="@+id/button11"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button12"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/button12"
-        android:layout_marginTop="142dp"
-        android:text="简单" />
+        android:layout_marginRight="58dp"
+        android:layout_marginTop="84dp"
+        android:layout_toLeftOf="@+id/button13"
+        android:text="最佳纪录"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button13"
+        android:layout_marginBottom="47dp"
+        android:text="入门难度：无" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button13"
+        android:text="简单难度：无" />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button12"
+        android:layout_alignLeft="@+id/TextView01"
+        android:text="中等难度：无" />
 
 </RelativeLayout>
