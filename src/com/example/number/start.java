@@ -8,6 +8,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -21,13 +22,15 @@ public class start extends Activity{
 	private TextView show1;
 	private TextView show2;
 	private TextView show3;
+	public static MainActivity m1;
 	private String fileName = "bestRecord.txt";
 	private static int difficulty=0;    //用户选择的游戏难度静态成员
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.start);
-	    
+	    m1=new MainActivity();
+	    m1.check=false;
 		easy =(Button) findViewById(R.id.button11);
 		easyUp = (Button) findViewById(R.id.button12);
 		middle = (Button) findViewById(R.id.button13);
@@ -109,5 +112,13 @@ public class start extends Activity{
 
 		return 10.0;
 	}
+	public boolean onKeyDown(int keyCode, KeyEvent event) { 
+		if(m1.check==true)
+		{
+		    MainActivity m = new MainActivity();
+		    m.mc.cancel();
+		}
+    return super.onKeyDown(keyCode, event);  
+} 
 	
 }

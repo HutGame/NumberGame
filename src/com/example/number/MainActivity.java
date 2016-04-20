@@ -11,6 +11,7 @@ import java.io.IOException;
 
 
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,7 +55,8 @@ public class MainActivity extends start{
 			showDialog(); 
 		}
 	}
-
+    
+    public static boolean check=true;
 	private long useTime=0;
 	private int gameTime=10;
 	private int countTime=0;
@@ -62,7 +65,6 @@ public class MainActivity extends start{
 	private TextView textView=null;
 	private TextView record=null;
 	private TextView bestRecord=null;
-
 	private double min=10.0;
 	private int onlyUseFirst=0;  //只调用一次开始游戏
 	private int state=0;     //解决bug
@@ -71,12 +73,13 @@ public class MainActivity extends start{
 	Chronometer chronometer=null;
 	Button startButton=null;
 	TextView showTimeInSecond =null;
-	myCountDownTimer mc; 
+	static myCountDownTimer mc; 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_main);
-
+        
 		initButton();
+		check=true;
 		showTimeInSecond = (TextView)findViewById(R.id.textView2);
 		startButton = (Button) findViewById(R.id.Button10);
 		record = (TextView) findViewById(R.id.textView3);
@@ -162,7 +165,7 @@ public class MainActivity extends start{
 					public void onClick(View v) {
 						button2.setVisibility(View.INVISIBLE);
 						if(getDifficulty()==3)
-							randomPosButton();
+							randomPosButton(); 
 						button3.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
@@ -250,7 +253,8 @@ public class MainActivity extends start{
 	}  
 
 	protected void showSuccessDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);   
+ 
+		AlertDialog.Builder builder = new AlertDialog.Builder(this); 
 		builder.setIcon(R.drawable.happy);   
 		builder.setTitle("恭喜您").setMessage("挑战成功")   
 		.setPositiveButton("下一关", new DialogInterface.OnClickListener() {   
@@ -311,6 +315,7 @@ public class MainActivity extends start{
 	 * 游戏失败对话提示
 	 * */
 	protected void showDialog() {   
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);   
 		builder.setIcon(R.drawable.cry);   
 		builder.setTitle("好可惜哦!").setMessage("时间到,游戏失败")   
@@ -346,7 +351,7 @@ public class MainActivity extends start{
 	/*
 	 * 按钮随机位置
 	 * */
-	protected void randomPosButton() {
+	/*protected void randomPosButton() {
 		float x,y;
 		y=(float) (Math.random()*700+100);
 		x=(float) (Math.random()*40+60);
@@ -384,8 +389,87 @@ public class MainActivity extends start{
 		x=(float) (Math.random()*40+540);
 		button9.setX(x);
 		button9.setY(y);
+	}*/
+	//按钮高度96 宽度128
+	protected void randomPosButton() {
+		
+		button1.setY((float) (Math.random()*700+100));
+		button1.setX((float) (Math.random()*540+40));
+		button2.setY((float) (Math.random()*700+100));
+		button2.setX((float) (Math.random()*540+40));
+		button3.setY((float) (Math.random()*700+100));
+		button3.setX((float) (Math.random()*540+40));
+		button4.setY((float) (Math.random()*700+100));
+		button4.setX((float) (Math.random()*540+40));
+		button5.setY((float) (Math.random()*700+100));
+		button5.setX((float) (Math.random()*540+40));
+		button6.setY((float) (Math.random()*700+100));
+		button6.setX((float) (Math.random()*540+40));
+		button7.setY((float) (Math.random()*700+100));
+		button7.setX((float) (Math.random()*540+40));
+		button8.setY((float) (Math.random()*700+100));
+		button8.setX((float) (Math.random()*540+40));
+		button9.setY((float) (Math.random()*700+100));
+		button9.setX((float) (Math.random()*540));
 	}
-
+	
+	/*float getGoodX(float x)
+	{
+		float x1=(float) (Math.random()*540+40);
+		while(Math.abs(x-x1)<96)
+		{
+			x1=(float) (Math.random()*540+40);
+		}
+		return x1;
+	}
+	float getGoodY(float y)
+	{
+		float y1=(float) (Math.random()*700+100);
+		while(Math.abs(y-y1)<128)
+		{
+			y1=(float) (Math.random()*700+100);
+		}
+		return y1;
+	}                //待优化
+    protected void randomPosButton() {
+    	float x1,y1,x2,y2,x3,y3,x4,y4,x5,y5,x6,y6,x7,y7,x8,y8,x9,y9;
+		x1=(float) (Math.random()*540+40);
+		y1=(float) (Math.random()*700+100);
+		button1.setY(y1);
+		button1.setX(x1);
+		x2=getGoodX(x1);
+		y2=getGoodY(y1);
+		button2.setY(y2);
+		button2.setX(x2);
+		x3=getGoodX(x2);
+		y3=getGoodY(y2);
+		button3.setY(y3);
+		button3.setX(x3);
+		x4=getGoodX(x3);
+		y4=getGoodY(y3);
+		button4.setY(y4);
+		button4.setX(x4);
+		x5=getGoodX(x4);
+		y5=getGoodY(y4);
+		button5.setY(y5);
+		button5.setX(x5);
+		x6=getGoodX(x5);
+		y6=getGoodY(y5);
+		button6.setY(y6);
+		button6.setX(x6);
+		x7=getGoodX(x6);
+		y7=getGoodY(y6);
+		button7.setY(y7);
+		button7.setX(x7);
+		x8=getGoodX(x7);
+		y8=getGoodY(y7);
+		button8.setY(y8);
+		button8.setX(x8);
+		x9=getGoodX(x8);
+		y9=getGoodY(y8);
+		button9.setY(y9);
+		button9.setX(x9);
+	}*/
 
 	protected void cancleListen() {
 		button1.setOnClickListener(null);
@@ -484,4 +568,6 @@ public class MainActivity extends start{
 
 		return 10.0;
 	}
+	
+	
 }
