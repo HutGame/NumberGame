@@ -15,6 +15,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
@@ -569,5 +570,20 @@ public class MainActivity extends start{
 		return 10.0;
 	}
 	
-	
+		public boolean onKeyDown(int keyCode,KeyEvent event) {        // 如果是返回键
+	if(keyCode == KeyEvent.KEYCODE_BACK){           //want to do
+		Intent intent = new Intent(MainActivity.this,start.class);
+		startActivity(intent);
+	}
+	return super.onKeyDown(keyCode, event);
+} 
+
+/*   @Override  
+public void onBackPressed() {  
+    super.onBackPressed();  
+	Intent intent = new Intent(MainActivity.this,start.class);
+	startActivity(intent);
+}  第二种动画*/  
+
+
 }

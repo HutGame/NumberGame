@@ -38,15 +38,14 @@ public class start extends Activity{
 		show2 = (TextView) findViewById(R.id.TextView01);
 		show3 = (TextView) findViewById(R.id.TextView02);
 		
-		show1.setText("入门:"+read(1)+"秒");
-		show2.setText("简单:"+read(2)+"秒");
-		show3.setText("中等:"+read(3)+"秒");
+		showtxt();
 		
 		easy.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setDifficulty(1);
 				intentGameActivity();        //跳转到游戏界面
+				finish();
 			}
 		});
 		easyUp.setOnClickListener(new OnClickListener() {
@@ -54,6 +53,7 @@ public class start extends Activity{
 			public void onClick(View v) {
 				setDifficulty(2);
 				intentGameActivity();
+				finish();
 			}
 		});
 		middle.setOnClickListener(new OnClickListener() {
@@ -61,6 +61,7 @@ public class start extends Activity{
 			public void onClick(View v) {
 				setDifficulty(3);
 				intentGameActivity();
+				finish();
 			}
 		});
 		
@@ -112,13 +113,19 @@ public class start extends Activity{
 
 		return 10.0;
 	}
-	public boolean onKeyDown(int keyCode, KeyEvent event) { 
+/*	public boolean onKeyDown(int keyCode, KeyEvent event) { 
 		if(m1.check==true)
 		{
 		    MainActivity m = new MainActivity();
 		    m.mc.cancel();
 		}
     return super.onKeyDown(keyCode, event);  
-} 
+} */
+	
+	public void showtxt(){
+		show1.setText("入门:"+read(1)+"秒");
+		show2.setText("简单:"+read(2)+"秒");
+		show3.setText("中等:"+read(3)+"秒");
+	}
 	
 }
