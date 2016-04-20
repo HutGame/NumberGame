@@ -38,8 +38,9 @@ public class start extends Activity{
 		show2 = (TextView) findViewById(R.id.TextView01);
 		show3 = (TextView) findViewById(R.id.TextView02);
 		
-		showtxt();
+		showtxt();  //更新排名榜
 		
+		/*三个不同难度的按钮监听*/
 		easy.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -66,17 +67,24 @@ public class start extends Activity{
 		});
 		
 	}
+	
+	
+	
 	protected void intentGameActivity() {
 		Intent intent = new Intent(start.this,MainActivity.class);
 		startActivity(intent);
 	}
+/*	得到困难级别*/
 	public int getDifficulty() {
 		return difficulty;
 	}
+/*	设置困难级别*/
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
 	
+	
+	/*读取文本里排名时间*/
 	private double read(int diffcult) {     
 		switch(diffcult){
 		case 1: 
@@ -114,25 +122,21 @@ public class start extends Activity{
 		return 10.0;
 	}
 	
+	
+/*	监听Main返回事件*/
 	public boolean onKeyDown(int keyCode, KeyEvent event) { 
-/*		if(keyCode == KeyEvent.KEYCODE_BACK){           //want to do
-			Intent home = new Intent(Intent.ACTION_MAIN);  
-			home.addCategory(Intent.CATEGORY_HOME);   
-			startActivity(home); 
-		}*/
-		
 	if(m1.check==true)
 		{
 		    MainActivity m = new MainActivity();
 		    m.mc.cancel();
-   
 		}
 	
 
     return super.onKeyDown(keyCode, event);  
 } 
 	
-  @Override  
+	
+/*   主界面按返回键回到桌面*/
 	public void onBackPressed() {  
 	    super.onBackPressed();  
 		Intent home = new Intent(Intent.ACTION_MAIN);  
@@ -143,7 +147,7 @@ public class start extends Activity{
 	   
 	   
 
-
+/*      显示排名榜*/
 	public void showtxt(){
 		show1.setText("入门:"+read(1)+"秒");
 		show2.setText("简单:"+read(2)+"秒");
