@@ -113,19 +113,43 @@ public class start extends Activity{
 
 		return 10.0;
 	}
-/*	public boolean onKeyDown(int keyCode, KeyEvent event) { 
-		if(m1.check==true)
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) { 
+/*		if(keyCode == KeyEvent.KEYCODE_BACK){           //want to do
+			Intent home = new Intent(Intent.ACTION_MAIN);  
+			home.addCategory(Intent.CATEGORY_HOME);   
+			startActivity(home); 
+		}*/
+		
+	if(m1.check==true)
 		{
 		    MainActivity m = new MainActivity();
 		    m.mc.cancel();
+   
 		}
-    return super.onKeyDown(keyCode, event);  
-} */
 	
+
+    return super.onKeyDown(keyCode, event);  
+} 
+	
+  @Override  
+	public void onBackPressed() {  
+	    super.onBackPressed();  
+		Intent home = new Intent(Intent.ACTION_MAIN);  
+		home.addCategory(Intent.CATEGORY_HOME);   
+		startActivity(home); 
+	}  
+
+	   
+	   
+
+
 	public void showtxt(){
 		show1.setText("入门:"+read(1)+"秒");
 		show2.setText("简单:"+read(2)+"秒");
 		show3.setText("中等:"+read(3)+"秒");
 	}
+	
+
 	
 }

@@ -80,7 +80,7 @@ public class MainActivity extends start{
 		setContentView(R.layout.fragment_main);
         
 		initButton();
-		check=true;
+	
 		showTimeInSecond = (TextView)findViewById(R.id.textView2);
 		startButton = (Button) findViewById(R.id.Button10);
 		record = (TextView) findViewById(R.id.textView3);
@@ -97,6 +97,7 @@ public class MainActivity extends start{
 				initButton();
 				listenButton();
 				startButton.setVisibility(View.INVISIBLE);
+				check=true;
 				state=0;
 				Toast.makeText(MainActivity.this,"计时开始", 1).show();
 				if(getDifficulty()==1)
@@ -570,10 +571,11 @@ public class MainActivity extends start{
 		return 10.0;
 	}
 	
-		public boolean onKeyDown(int keyCode,KeyEvent event) {        // 如果是返回键
+	public boolean onKeyDown(int keyCode,KeyEvent event) {        // 如果是返回键
 	if(keyCode == KeyEvent.KEYCODE_BACK){           //want to do
 		Intent intent = new Intent(MainActivity.this,start.class);
 		startActivity(intent);
+		finish();
 	}
 	return super.onKeyDown(keyCode, event);
 } 
