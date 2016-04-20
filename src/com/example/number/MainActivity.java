@@ -570,8 +570,9 @@ public class MainActivity extends start{
 
 		return 10.0;
 	}
-	
-	public boolean onKeyDown(int keyCode,KeyEvent event) {        // 如果是返回键
+
+/*	按返回键时返回start*/
+	public boolean onKeyDown(int keyCode,KeyEvent event) {     
 	if(keyCode == KeyEvent.KEYCODE_BACK){           //want to do
 		Intent intent = new Intent(MainActivity.this,start.class);
 		startActivity(intent);
@@ -580,12 +581,7 @@ public class MainActivity extends start{
 	return super.onKeyDown(keyCode, event);
 } 
 
-/*   @Override  
-public void onBackPressed() {  
-    super.onBackPressed();  
-	Intent intent = new Intent(MainActivity.this,start.class);
-	startActivity(intent);
-}  第二种动画*/  
+
 
 
 }
