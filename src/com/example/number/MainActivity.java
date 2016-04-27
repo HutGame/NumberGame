@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -72,6 +73,7 @@ public class MainActivity extends start{
     		                  {"(9)","九","nine","Ⅸ","Ⅸ"}
     };
     public static boolean check=true;
+    public static boolean checkMcTemp=false;  //检查临时计时器是否关闭
 	private long useTime=0;
 	public  int gameTime=10;  //可能需要修改的
 	public static int g1=10,g2=10,g3=10,g4=10,g5=10,g6=10,g7=10,g8=10,g9=10;  //作为start判断条件
@@ -94,33 +96,46 @@ public class MainActivity extends start{
 	TextView showTimeInSecond =null;
 	private MediaPlayer music;
 	static myCountDownTimer mc; 
+	static myCountDownTimer mcTemp; 
+	TextView next;
+	public int tempMcCheck=0;   //解决计时器停止的问题 没按开始游戏不能调用
+	public int onlyTempMc=0; //每次开始游戏只准调用一次  
+	public static int isReturn=0;
 	protected void onCreate(Bundle savedInstanceState){
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_main);
         
 		initButton();
+		setRandomPosButton(); 
 		showTimeInSecond = (TextView)findViewById(R.id.textView2);
 		startButton = (Button) findViewById(R.id.Button10);
 		record = (TextView) findViewById(R.id.textView3);
 		bestRecord = (TextView) findViewById(R.id.textView4);
 		textView = (TextView) findViewById(R.id.textView1);
 		chronometer = (Chronometer) findViewById(R.id.chronometer);
-
-
+		next = (TextView) findViewById(R.id.next);
+       
+ 
 		min=read(getDifficulty());   //程序打开时读取文本里面最佳成绩，并赋值给min;
 		gameTime=(int) readGameTime(getDifficulty());
 		bestRecord.setText("最佳记录:"+min+"秒");
 		textView.setText("限时"+gameTime+"秒");
-		
+		//提示用户
+		giveInfoTouser();
 		
 		startButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) { 
 				succese=0;
+				tempMcCheck=1;
+				onlyTempMc=0;  //只调用一次
 				initButton();
 				listenButton();
 				startButton.setVisibility(View.INVISIBLE);
+				giveInfoTouser();
 				check=true;
 				state=0;
+				checkMcTemp=false;    //点击开始启动的是计时器 所以临时的为false
 				Toast.makeText(MainActivity.this,"计时开始", 1).show();
 				if(getDifficulty()==1)
 				{
@@ -164,6 +179,53 @@ public class MainActivity extends start{
              }   
          });   */
 	}   
+    protected void giveInfoTouser() {
+		// TODO Auto-generated method stub
+    	if(getDifficulty()==6)
+		{
+		if(gameTime-5==0)
+		next.setText("已成功解锁下一关");
+		else
+		next.setText("距离解锁下一关还差:"+(gameTime-5)+"个关卡");
+		}
+		else if(getDifficulty()>6)
+		{
+		if(gameTime-6==0)
+		next.setText("已成功解锁下一关");
+		else
+		next.setText("距离解锁下一关还差:"+(gameTime-5)+"个关卡");
+		}
+		else
+		{
+		if(gameTime-3==0)
+		next.setText("已成功解锁下一关");
+		else
+		next.setText("距离解锁下一关还差:"+(gameTime-3)+"个关卡");
+		}
+	}
+	/*
+     * 略微改变初始位置
+     */
+	private void setRandomPosButton() {
+		button1.setY((float) (Math.random()*100+100));
+		button1.setX((float) (Math.random()*70+40));
+		button2.setY((float) (Math.random()*100+100));
+		button2.setX((float) (Math.random()*70+40));
+		button3.setY((float) (Math.random()*100+100));
+		button3.setX((float) (Math.random()*70+40));
+		button4.setY((float) (Math.random()*100+100));
+		button4.setX((float) (Math.random()*70+40));
+		button5.setY((float) (Math.random()*100+100));
+		button5.setX((float) (Math.random()*70+40));
+		button6.setY((float) (Math.random()*100+100));
+		button6.setX((float) (Math.random()*70+40));
+		button7.setY((float) (Math.random()*100+100));
+		button7.setX((float) (Math.random()*70+40));
+		button8.setY((float) (Math.random()*100+100));
+		button8.setX((float) (Math.random()*70+40));
+		button9.setY((float) (Math.random()*100+100));
+		button9.setX((float) (Math.random()*70+40));
+	}
 
 	void initButton() {
 		button1 = (Button) findViewById(R.id.button1);
@@ -192,16 +254,18 @@ public class MainActivity extends start{
 						/*rotationButton();
 						textTypeChangeButton();*/
 						effectChange();
-						PlayMusic(R.raw.mengmengda+(int)(Math.random()*6+1));
+						
 						button2.setVisibility(View.INVISIBLE);
+						PlayMusic(R.raw.mengmengda+(int)(Math.random()*6+1));
 						button3.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
 								/*rotationButton();
 								textTypeChangeButton();*/
 								effectChange();
-								PlayMusic(R.raw.mengmengda+(int)(Math.random()*6+1));
+								
 								button3.setVisibility(View.INVISIBLE);
+								PlayMusic(R.raw.mengmengda+(int)(Math.random()*6+1));
 								button4.setOnClickListener(new OnClickListener() {
 									@Override
 									public void onClick(View v) {
@@ -245,16 +309,19 @@ public class MainActivity extends start{
 																		button9.setOnClickListener(new OnClickListener() {
 																			@Override
 																			public void onClick(View v) {
-																				PlayMusic(R.raw.mengmengda+(int)(Math.random()*6+1));
 																				button9.setVisibility(View.INVISIBLE);
+																				PlayMusic(R.raw.mengmengda+(int)(Math.random()*6+1));
+																				
 																				if(state!=1)
 																				{
+																					if(checkMcTemp==true)
+																					mcTemp.cancel();  //关掉临时计时器
 																				    mc.cancel();
-																				    /*if(gameTime==0)
+																				    if(gameTime==0)
 																				    {
-																				    	
-																				    	
-																				    }*/
+																				    	startButton.setVisibility(View.INVISIBLE); 
+																				    	Toast.makeText(MainActivity.this,"好厉害,您已通关该关卡的所有关卡",1).show();
+																				    }
 																					//if((gameTime*1000-useTime)/1000.0<gameTime+0.2)
 																					//{
 																						succese=1;
@@ -308,6 +375,8 @@ public class MainActivity extends start{
 			@Override  
 			public void onClick(DialogInterface dialog, int which) { 
 				gameTime--;
+				tempMcCheck=0;
+				giveInfoTouser();
 				saveGameTime(gameTime,getDifficulty());      //存档
 				randomPosButton();
 				//chronometer.setText("00:00");
@@ -322,6 +391,9 @@ public class MainActivity extends start{
 				}
 				else if(getDifficulty()==2)
 				{
+					onlyTempMc=0;
+					tempMcCheck=1;
+					checkMcTemp=false;    //点击下一关启动的是计时器 所以临时的为false
 					listenButton();
 					succese=0;
 					state=0; 
@@ -379,6 +451,7 @@ public class MainActivity extends start{
 				showButton();
 				//chronometer.setText("00:00");
 				cancleListen();  
+				tempMcCheck=0;
 				showTimeInSecond.setText("倒计时工具");
 				if(getDifficulty()==1)
 				{
@@ -386,6 +459,9 @@ public class MainActivity extends start{
 				}
 				else if(getDifficulty()==2)
 				{
+					checkMcTemp=false;    //点击重新开始启动的是计时器 所以临时的为false
+					tempMcCheck=1;
+					onlyTempMc=0;
 					state=0;
 					listenButton();
 					mc = new myCountDownTimer(gameTime*1000,1);   //总共10s  1毫秒执行一次onTick
@@ -406,39 +482,39 @@ public class MainActivity extends start{
      */
 	void showMessage()
 	{
-		if(getDifficulty()==1 && gameTime<=3)
+		if(getDifficulty()==1 && gameTime<=4)
 		{
 		Toast.makeText(this, "您已成功解锁第二关", 1).show();
 		}
-		if(getDifficulty()==2 && gameTime<=3)
+		if(getDifficulty()==2 && gameTime<=4)
 		{
 		Toast.makeText(this, "您已成功解锁第三关", 1).show();
 		}
-		if(getDifficulty()==3 && gameTime<=3)
+		if(getDifficulty()==3 && gameTime<=4)
 		{
 		Toast.makeText(this, "您已成功解锁第四关", 1).show();
 		}
-		if(getDifficulty()==4 && gameTime<=3)
+		if(getDifficulty()==4 && gameTime<=4)
 		{
 		Toast.makeText(this, "您已成功解锁第五关", 1).show();
 		}
-		if(getDifficulty()==5 && gameTime<=3)
+		if(getDifficulty()==5 && gameTime<=4)
 		{
 		Toast.makeText(this, "您已成功解锁第六关", 1).show();
 		}
-		if(getDifficulty()==6 && gameTime<=5)
+		if(getDifficulty()==6 && gameTime<=6)
 		{
 		Toast.makeText(this, "您已成功解锁第七关", 1).show();
 		}
-		if(getDifficulty()==7 && gameTime<=6)
+		if(getDifficulty()==7 && gameTime<=7)
 		{
 		Toast.makeText(this, "您已成功解锁第八关", 1).show();
 		}
-		if(getDifficulty()==8 && gameTime<=6)
+		if(getDifficulty()==8 && gameTime<=7)
 		{
 		Toast.makeText(this, "您已成功解锁第九关", 1).show();
 		}
-		if(getDifficulty()==9 && gameTime<=6)
+		if(getDifficulty()==9 && gameTime<=7)
 		{
 		Toast.makeText(this, "您已成功通过所有关卡", 1).show();
 		}
@@ -944,16 +1020,52 @@ public class MainActivity extends start{
 	}
 	
 	/*按返回键时返回start*/
-	public boolean onKeyDown(int keyCode,KeyEvent event) {        
+	public boolean onKeyDown(int keyCode,KeyEvent event) {   
+		
 	if(keyCode == KeyEvent.KEYCODE_BACK){           //want to do
+		isReturn=1;
 		Intent intent = new Intent(MainActivity.this,start.class);
 		startActivity(intent);
 		finish();
 	}
+	else
+	{
+		isReturn=0;
+		if(tempMcCheck==1)
+		{
+		mc.cancel();
+		if(onlyTempMc==0)
+		{
+		onlyTempMc=1;
+		mcTemp=new myCountDownTimer(useTime, 1);   //临时计时器和计时器共享一个结束函数
+		mcTemp.start();
+		checkMcTemp=true;
+		}
+		}
+	}
 	return super.onKeyDown(keyCode, event);
 } 
+	
+	/* public boolean onKeyDown(int keyCode, KeyEvent event) {  
+	        switch (keyCode) {  
+	   
+	        case KeyEvent.KEYCODE_VOLUME_DOWN:  
+	        	//setVolumeControlStream(AudioManager.STREAM_MUSIC);
+	        	mc.onTick(useTime);
+	            return true;  
 
-
+	        case KeyEvent.KEYCODE_VOLUME_UP:  
+	        	//setVolumeControlStream(AudioManager.STREAM_MUSIC);
+	        	mc.onTick(useTime);
+	            return true;
+	        case KeyEvent.KEYCODE_BACK:  
+	        	Intent intent = new Intent(MainActivity.this,start.class);
+	    		startActivity(intent);
+	    		finish();
+	            return true;  
+	        }  
+	        return super.onKeyDown(keyCode, event);  
+	    }  */
 
 
 }

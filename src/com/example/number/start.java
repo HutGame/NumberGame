@@ -418,6 +418,12 @@ public class start extends Activity{
 	{
 		    MainActivity m = new MainActivity();
 		    m.mc.cancel();
+		    
+	} 
+	if(m1.checkMcTemp==true && m1.isReturn==1)  //点的是返回而不是声音
+	{
+			MainActivity m = new MainActivity();
+		    m.mcTemp.cancel();
 	}
 	if(getDifficulty()==1 && m1.g1<=3)  //只有当关卡难度是1 并且第1关的时间是3秒以下的时候才开启第二关
     {

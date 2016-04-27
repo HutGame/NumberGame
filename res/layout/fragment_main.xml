@@ -42,18 +42,6 @@
       
          android:text="2" />
 
-     <Button
-         android:id="@+id/button1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_alignParentTop="true"
-         android:layout_marginLeft="42dp"
-         android:layout_marginTop="60dp"
-         android:textColor="@android:color/white"
-     
-         android:text="1" />
-
      <TextView
          android:id="@+id/textView1"
          android:layout_width="wrap_content"
@@ -166,6 +154,25 @@
           android:layout_alignLeft="@+id/textView3"
           android:layout_below="@+id/textView3"
           android:text="最佳记录"
+          android:textColor="@android:color/white"
+          android:textSize="20sp" />
+
+      <Button
+          android:id="@+id/button1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/textView4"
+          android:layout_toLeftOf="@+id/Button10"
+          android:text="1"
+          android:textColor="@android:color/white" />
+
+      <TextView
+          android:id="@+id/next"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/textView4"
+          android:layout_alignTop="@+id/button1"
+          android:text="距离解锁下一关还差:"
           android:textColor="@android:color/white"
           android:textSize="20sp" />
 
