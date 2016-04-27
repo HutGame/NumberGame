@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -93,6 +94,7 @@ public class MainActivity extends start{
 	button7,button8,button9;
 	Chronometer chronometer=null;
 	Button startButton=null;
+	int width=0,height=0;
 	TextView showTimeInSecond =null;
 	private MediaPlayer music;
 	static myCountDownTimer mc; 
@@ -123,7 +125,11 @@ public class MainActivity extends start{
 		textView.setText("限时"+gameTime+"秒");
 		//提示用户
 		giveInfoTouser();
-		
+		WindowManager wm = this.getWindowManager();
+		 
+	     width = wm.getDefaultDisplay().getWidth();
+	     height = wm.getDefaultDisplay().getHeight();
+	     Toast.makeText(this,"宽度"+width+"高度"+height,1).show();
 		startButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) { 
 				succese=0;
@@ -183,21 +189,21 @@ public class MainActivity extends start{
 		// TODO Auto-generated method stub
     	if(getDifficulty()==6)
 		{
-		if(gameTime-5==0)
+		if(gameTime-5<=0)
 		next.setText("已成功解锁下一关");
 		else
 		next.setText("距离解锁下一关还差:"+(gameTime-5)+"个关卡");
 		}
 		else if(getDifficulty()>6)
 		{
-		if(gameTime-6==0)
+		if(gameTime-6<=0)
 		next.setText("已成功解锁下一关");
 		else
 		next.setText("距离解锁下一关还差:"+(gameTime-5)+"个关卡");
 		}
 		else
 		{
-		if(gameTime-3==0)
+		if(gameTime-3<=0)
 		next.setText("已成功解锁下一关");
 		else
 		next.setText("距离解锁下一关还差:"+(gameTime-3)+"个关卡");
@@ -590,19 +596,19 @@ public class MainActivity extends start{
 	 */
 	float getGoodX(float x)
 	{
-		float x1=(float) (Math.random()*540+40);
+		float x1=(float) (Math.random()*((int)(width/1.4))+width/18);
 		while(Math.abs(x-x1)<96)
 		{
-			x1=(float) (Math.random()*540+40);
+			x1=(float) (Math.random()*((int)(width/1.4))+width/18);
 		}
 		return x1;
 	}
 	float getGoodY(float y)
 	{
-		float y1=(float) (Math.random()*550+150);
+		float y1=(float) (Math.random()*((int)(height/1.8))+height/7);
 		while(Math.abs(y-y1)<128)
 		{
-			y1=(float) (Math.random()*550+150);
+			y1=(float) (Math.random()*((int)(height/1.8))+height/7);
 		}
 		return y1;
 	}                //待优化
@@ -622,8 +628,10 @@ public class MainActivity extends start{
 	}
     protected void randomPosButton() {
     	float x1,y1,x2,y2,x3,y3,x4,y4,x5,y5,x6,y6,x7,y7,x8,y8,x9,y9;
-		x1=(float) (Math.random()*540+40);
-		y1=(float) (Math.random()*550+150);
+		/*x1=(float) (Math.random()*540+40);
+		y1=(float) (Math.random()*520+180);*/
+    	x1=(float) (Math.random()*((int)(width/1.4))+width/18);
+    	y1=(float) (Math.random()*((int)(height/1.8))+height/7);
 		button1.setY(y1);
 		button1.setX(x1);
 		x2=getGoodX(x1);
